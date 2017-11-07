@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //import { Link } from 'react-router-dom'
 
 class Book extends Component {
 
   render() {
-    const {book} = this.props;
+    const {book, onUpdateShelf} = this.props;
+    let authors = book.authors.join(", ");
 
     return (
         <div className="book">
@@ -12,7 +14,12 @@ class Book extends Component {
             <div className="book-cover"
               style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`}}></div>
             <div className="book-shelf-changer">
-              <select>
+              <select
+                value={book.shelf}
+                onChange={(e) => {
+                onUpdateShelf(e.target.value, book)
+                }
+              }>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -22,10 +29,16 @@ class Book extends Component {
             </div>
           </div>
           <div className="book-title">{book.title}</div>
-          <div className="book-authors">{book.authors}</div>
+          <div className="book-authors">{authors}</div>
         </div>
     )
   }
+
+  static propTypes = {
+    book: PropTypes.array.isRequired,
+    onUpdateShelf: PropTypes.func.isRequired
+  }
+
 }
 
 export default Book

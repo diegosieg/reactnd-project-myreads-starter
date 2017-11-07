@@ -161,6 +161,12 @@ body, .app {
   cursor: pointer;
 }
 
+.bookshelf-qtd {
+  color: #ccc;
+  font-size: 0.8em;
+  float: right;
+}
+
 /* book cover */
 
 .book-cover {

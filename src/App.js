@@ -12,21 +12,32 @@ class BooksApp extends React.Component {
     read: []
   }
 
-  componentDidMount() {
+  populateShelf = () => {
     let { currentlyReading, wantToRead, read} = []
 
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-      console.log(books);
+      BooksAPI.getAll().then((books) => {
+        this.setState({ books });
+        console.log(books);
 
-      //filtering these books by shelves categories
-      if (books.length !== 0) {
-        currentlyReading = books.filter((book) => book.shelf === "currentlyReading")
-        wantToRead = books.filter((book) => book.shelf === "wantToRead")
-        read = books.filter((book) => book.shelf === "read")
-        this.setState({currentlyReading, wantToRead, read})
-      }
+        //filtering these books by shelves categories
+        if (books.length !== 0) {
+          currentlyReading = books.filter((book) => book.shelf === "currentlyReading");
+          wantToRead = books.filter((book) => book.shelf === "wantToRead");
+          read = books.filter((book) => book.shelf === "read");
+
+          this.setState({currentlyReading, wantToRead, read});
+        }
+      });
+  }
+
+  onUpdateShelf = (shelfName, book) => {
+    BooksAPI.update(book, shelfName).then((books) => {
+      this.populateShelf();
     })
+  }
+
+  componentDidMount() {
+    this.populateShelf();
   }
 
   render() {
@@ -64,6 +75,7 @@ class BooksApp extends React.Component {
             currentlyReading={currentlyReading}
             wantToRead={wantToRead}
             read={read}
+            onUpdateShelf={this.onUpdateShelf}
           />
         )}/>
 

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import BookShelves from './BookShelves';
 
 class MyReads extends Component {
 
   render() {
-    const {currentlyReading, wantToRead, read} = this.props;
+    const {currentlyReading, wantToRead, read, onUpdateShelf} = this.props;
 
     return (
       <div className="list-books">
@@ -18,6 +19,7 @@ class MyReads extends Component {
             books={currentlyReading}
             titleCategory="Currently Reading"
             currentCategory="currentlyReading"
+            onUpdateShelf={onUpdateShelf}
           />
         )}
 
@@ -26,6 +28,7 @@ class MyReads extends Component {
             books={wantToRead}
             titleCategory="Want to Read"
             currentCategory="wantToRead"
+            onUpdateShelf={onUpdateShelf}
           />
         )}
 
@@ -34,6 +37,7 @@ class MyReads extends Component {
             books={read}
             titleCategory="Read"
             currentCategory="read"
+            onUpdateShelf={onUpdateShelf}
           />
         )}
 
@@ -44,6 +48,13 @@ class MyReads extends Component {
 
       </div>
     )
+  }
+
+  static propTypes = {
+    currentlyReading: PropTypes.array.isRequired,
+    wantToRead: PropTypes.array.isRequired,
+    read: PropTypes.array.isRequired,
+    onUpdateShelf: PropTypes.func.isRequired
   }
 }
 
