@@ -1,43 +1,49 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
+import sortBy from 'sort-by';
 import MyReads from './components/MyReads';
+import SearchBooks from './components/SearchBooks';
 import './App.css';
 
 class BooksApp extends React.Component {
   state = {
+    // all books
     books: [],
+    // shelves definition
     currentlyReading: [],
     wantToRead: [],
     read: []
   }
 
-  populateShelf = () => {
+  populateShelves = () => {
     let { currentlyReading, wantToRead, read} = []
 
-      BooksAPI.getAll().then((books) => {
+    BooksAPI.getAll().then((books) => {
+      if (books.length !== 0) {
+        //get all books and sort by title
+        books.sort(sortBy('title'));
+
         this.setState({ books });
-        console.log(books);
 
-        //filtering these books by shelves categories
-        if (books.length !== 0) {
-          currentlyReading = books.filter((book) => book.shelf === "currentlyReading");
-          wantToRead = books.filter((book) => book.shelf === "wantToRead");
-          read = books.filter((book) => book.shelf === "read");
+        //filtering books by shelves categories and sort them by title
+        currentlyReading = books.filter((book) => book.shelf === "currentlyReading").sort(sortBy('title'));
+        wantToRead = books.filter((book) => book.shelf === "wantToRead").sort(sortBy('title'));
+        read = books.filter((book) => book.shelf === "read").sort(sortBy('title'));
 
-          this.setState({currentlyReading, wantToRead, read});
-        }
-      });
+        this.setState({currentlyReading, wantToRead, read});
+      }
+    });
   }
 
-  onUpdateShelf = (shelfName, book) => {
+  onUpdateShelf = (book, shelfName) => {
     BooksAPI.update(book, shelfName).then((books) => {
-      this.populateShelf();
+      this.populateShelves();
     })
   }
 
   componentDidMount() {
-    this.populateShelf();
+    this.populateShelves();
   }
 
   render() {
@@ -48,26 +54,7 @@ class BooksApp extends React.Component {
       <div className="app">
 
         <Route path="/search" render={({history}) => (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <Link to='/' className="close-search">Close</Link>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+          <SearchBooks books={books}/>
         )}/>
 
         <Route exact path="/" render={() => (

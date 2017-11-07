@@ -17,7 +17,7 @@ class Book extends Component {
               <select
                 value={book.shelf}
                 onChange={(e) => {
-                onUpdateShelf(e.target.value, book)
+                onUpdateShelf(book, e.target.value)
                 }
               }>
                 <option value="none" disabled>Move to...</option>
