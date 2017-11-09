@@ -33,7 +33,7 @@ function Book(props) {
 }
 
 Book.propTypes = {
-    book: PropTypes.array.isRequired,
+    book: PropTypes.object.isRequired,
     onUpdateShelf: PropTypes.func.isRequired
 }
 
