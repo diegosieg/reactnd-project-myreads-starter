@@ -9,7 +9,7 @@ class SearchBooks extends Component {
   }
 
   render() {
-    const {books, searchQuery, noResults, onUpdateShelf, searchBooks, booksInMyShelves} = this.props;
+    const {books, booksInMyShelves, searchQuery, noResults, onUpdateShelf, searchBooks} = this.props;
 
     return (
       <div className="search-books">
@@ -45,7 +45,11 @@ class SearchBooks extends Component {
 
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    booksInMyShelves: PropTypes.array.isRequired,
+    onUpdateShelf: PropTypes.func.isRequired,
+    searchBooks: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    noResults: PropTypes.bool.isRequired
   }
 
 }
