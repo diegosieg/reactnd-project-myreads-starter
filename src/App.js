@@ -10,26 +10,45 @@ class BooksApp extends React.Component {
   state = {
     // all books
     books: [],
+    searchQuery: '',
+    noResults: false,
     // shelves definition
+    booksInMyShelves: [],
     currentlyReading: [],
     wantToRead: [],
     read: []
   }
 
+  searchBooks = (value) => {
+    this.setState({searchQuery: value})
+
+    if(value.length > 2){
+      BooksAPI.search(value, 20).then((books) => {
+        if(books.error === "empty query"){
+          this.setState({ books: [], noResults: true })
+        }else{
+          this.setState({ books, noResults: false })
+        }
+      })
+    }else{
+      this.setState({ books: [], noResults: false })
+    }
+  }
+
   populateShelves = () => {
     let { currentlyReading, wantToRead, read} = []
 
-    BooksAPI.getAll().then((books) => {
-      if (books.length !== 0) {
-        //get all books and sort by title
-        books.sort(sortBy('title'));
+    BooksAPI.getAll().then((booksInMyShelves) => {
+      if (booksInMyShelves.length !== 0) {
+        //get all booksInMyShelves and sort by title
+        booksInMyShelves.sort(sortBy('title'));
 
-        this.setState({ books });
+        this.setState({ booksInMyShelves });
 
-        //filtering books by shelves categories and sort them by title
-        currentlyReading = books.filter((book) => book.shelf === "currentlyReading").sort(sortBy('title'));
-        wantToRead = books.filter((book) => book.shelf === "wantToRead").sort(sortBy('title'));
-        read = books.filter((book) => book.shelf === "read").sort(sortBy('title'));
+        //filtering booksInMyShelves by shelves categories and sort them by title
+        currentlyReading = booksInMyShelves.filter((book) => book.shelf === "currentlyReading").sort(sortBy('title'));
+        wantToRead = booksInMyShelves.filter((book) => book.shelf === "wantToRead").sort(sortBy('title'));
+        read = booksInMyShelves.filter((book) => book.shelf === "read").sort(sortBy('title'));
 
         this.setState({currentlyReading, wantToRead, read});
       }
@@ -47,8 +66,8 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const { books } = this.state;
-    const { currentlyReading, wantToRead, read } = this.state;
+    const { books, searchQuery, noResults } = this.state;
+    const { currentlyReading, wantToRead, read, booksInMyShelves } = this.state;
 
     return (
       <div className="app">
@@ -56,7 +75,11 @@ class BooksApp extends React.Component {
         <Route path="/search" render={({history}) => (
           <SearchBooks
             books={books}
+            booksInMyShelves={booksInMyShelves}
             onUpdateShelf={this.onUpdateShelf}
+            searchQuery={searchQuery}
+            noResults={noResults}
+            searchBooks={this.searchBooks}
           />
         )}/>
 
