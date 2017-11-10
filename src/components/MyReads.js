@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BookShelves from './BookShelves';
 
 function MyReads(props) {
-  const {currentlyReading, wantToRead, read, onUpdateShelf} = props;
+  const {currentlyReading, wantToRead, read, updateShelf} = props;
 
   return (
     <div className="list-books">
@@ -17,7 +17,7 @@ function MyReads(props) {
           books={currentlyReading}
           titleCategory="Currently Reading"
           currentCategory="currentlyReading"
-          onUpdateShelf={onUpdateShelf}
+          updateShelf={updateShelf}
         />
       )}
 
@@ -26,7 +26,7 @@ function MyReads(props) {
           books={wantToRead}
           titleCategory="Want to Read"
           currentCategory="wantToRead"
-          onUpdateShelf={onUpdateShelf}
+          updateShelf={updateShelf}
         />
       )}
 
@@ -35,7 +35,7 @@ function MyReads(props) {
           books={read}
           titleCategory="Read"
           currentCategory="read"
-          onUpdateShelf={onUpdateShelf}
+          updateShelf={updateShelf}
         />
       )}
 
@@ -52,7 +52,7 @@ MyReads.propTypes = {
   currentlyReading: PropTypes.array.isRequired,
   wantToRead: PropTypes.array.isRequired,
   read: PropTypes.array.isRequired,
-  onUpdateShelf: PropTypes.func.isRequired
+  updateShelf: PropTypes.func.isRequired
 }
 
 export default MyReads

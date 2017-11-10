@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 //import { Link } from 'react-router-dom'
 
 function Book(props) {
-  const {book, onUpdateShelf} = props;
+  const {book, updateShelf} = props;
   let authors = book.authors.join(", ");
 
   return (
@@ -15,7 +15,7 @@ function Book(props) {
             <select
               value={book.shelf !== undefined ? book.shelf : 'none'}
               onChange={(e) => {
-                onUpdateShelf(book, e.target.value)
+                updateShelf(book, e.target.value)
               }
             }>
               <option value="" disabled>Move to...</option>
@@ -34,7 +34,7 @@ function Book(props) {
 
 Book.propTypes = {
     book: PropTypes.object.isRequired,
-    onUpdateShelf: PropTypes.func.isRequired
+    updateShelf: PropTypes.func.isRequired
 }
 
 export default Book

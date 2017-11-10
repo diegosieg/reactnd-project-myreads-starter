@@ -19,21 +19,50 @@ class BooksApp extends React.Component {
     read: []
   }
 
+  syncSearchAndShelvesItems = booksFromSearch => {
+    const shelfBooksIds = this.state.booksInMyShelves.map(book => book.id);
+    let mergedBooks = [];
+
+    if (Array.isArray(booksFromSearch)) {
+      mergedBooks = booksFromSearch.map(searchedBook => {
+        if (shelfBooksIds.includes(searchedBook.id)) {
+          return this.state.booksInMyShelves.find(shelfBook => shelfBook.id === searchedBook.id);
+        } else {
+          return searchedBook;
+        }
+      })
+    }
+
+    return mergedBooks;
+  };
+
   searchBooks = (value) => {
     this.setState({searchQuery: value})
 
-    if(value.length > 2){
+    if (value.length > 2) {
       BooksAPI.search(value, 20).then((books) => {
         if(books.error === "empty query"){
           this.setState({ books: [], noResults: true })
-        }else{
-          this.setState({ books, noResults: false })
+        } else {
+          this.setState({ noResults: false })
+          this.setState({ books: this.syncSearchAndShelvesItems(books) })
         }
       })
-    }else{
+    } else {
       this.setState({ books: [], noResults: false })
     }
   }
+
+  clearSearch = () => {
+    this.setState({searchQuery: '', books: []});
+  }
+
+  deleteBookFromSearchList = bookId => {
+    const filteredBookList = this.state.books.filter(
+      book => book.id !== bookId
+    );
+    this.setState({ books: filteredBookList });
+  };
 
   populateShelves = () => {
     let { currentlyReading, wantToRead, read} = []
@@ -55,10 +84,11 @@ class BooksApp extends React.Component {
     });
   }
 
-  onUpdateShelf = (book, shelfName) => {
+  updateShelf = (book, shelfName) => {
     BooksAPI.update(book, shelfName).then((books) => {
       this.populateShelves();
-    })
+    });
+    this.deleteBookFromSearchList(book.id);
   }
 
   componentDidMount() {
@@ -67,19 +97,19 @@ class BooksApp extends React.Component {
 
   render() {
     const { books, searchQuery, noResults } = this.state;
-    const { currentlyReading, wantToRead, read, booksInMyShelves } = this.state;
+    const { currentlyReading, wantToRead, read } = this.state;
 
     return (
       <div className="app">
 
         <Route path="/search" render={({history}) => (
           <SearchBooks
-            books={books}
-            booksInMyShelves={booksInMyShelves}
-            onUpdateShelf={this.onUpdateShelf}
+            booksFromSearch={books}
+            updateShelf={this.updateShelf}
             searchQuery={searchQuery}
             noResults={noResults}
             searchBooks={this.searchBooks}
+            clearSearch={this.clearSearch}
           />
         )}/>
 
@@ -88,7 +118,7 @@ class BooksApp extends React.Component {
             currentlyReading={currentlyReading}
             wantToRead={wantToRead}
             read={read}
-            onUpdateShelf={this.onUpdateShelf}
+            updateShelf={this.updateShelf}
           />
         )}/>
 

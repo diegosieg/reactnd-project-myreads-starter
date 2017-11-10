@@ -4,7 +4,7 @@ import Book from './Book';
 //import { Link } from 'react-router-dom'
 
 function BookShelves(props) {
-  const {books, titleCategory, onUpdateShelf} = props;
+  const {books, titleCategory, updateShelf} = props;
 
   return (
     <div className="list-books-content">
@@ -23,7 +23,7 @@ function BookShelves(props) {
               <li key={book.id}>
                 <Book
                   book={book}
-                  onUpdateShelf={onUpdateShelf}
+                  updateShelf={updateShelf}
                 />
               </li>
               )
@@ -40,7 +40,7 @@ function BookShelves(props) {
 BookShelves.propTypes = {
   books: PropTypes.array.isRequired,
   titleCategory: PropTypes.string.isRequired,
-  onUpdateShelf: PropTypes.func.isRequired
+  updateShelf: PropTypes.func.isRequired
 }
 
 export default BookShelves
