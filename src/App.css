@@ -183,6 +183,10 @@ body, .app {
 
 .shelves-stats-box {
   padding: 0 20px 40px;
+  -webkit-animation: opacity-transition 3s ease-in; /* Safari 4+ */
+  -moz-animation:    opacity-transition 3s ease-in; /* Fx 5+ */
+  -o-animation:      opacity-transition 3s ease-in; /* Opera 12+ */
+  animation:         opacity-transition 3s ease-in; /* IE 10+, Fx 29+ */
 }
 
 .shelves-stats-title {
@@ -204,4 +208,23 @@ body, .app {
   }
 }
 
-
+@-webkit-keyframes opacity-transition {
+  0%   { opacity: 0; }
+  80%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes opacity-transition {
+  0%   { opacity: 0; }
+  80%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@-o-keyframes opacity-transition {
+  0%   { opacity: 0; }
+  80%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@keyframes opacity-transition {
+  0%   { opacity: 0; }
+  80%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
