@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import BookShelves from './BookShelves';
+import Stats from './Stats';
 
 function MyReads(props) {
   const {currentlyReading, wantToRead, read, updateShelf} = props;
+  const statsBooks = [{'currentlyReading': currentlyReading, 'wantToRead': wantToRead, 'read': read}];
 
   return (
     <div className="list-books">
@@ -39,6 +41,7 @@ function MyReads(props) {
         />
       )}
 
+      <Stats statsBooks={statsBooks} />
 
       <div className="open-search">
         <Link to="/search">Add a book</Link>

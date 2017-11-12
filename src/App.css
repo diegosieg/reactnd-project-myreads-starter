@@ -178,3 +178,30 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* stats */
+
+.shelves-stats-box {
+  padding: 0 20px 40px;
+}
+
+.shelves-stats-title {
+  border-bottom: 1px solid #dedede;
+}
+
+.shelves-stats-chart {
+  float: left;
+  padding-bottom: 3em;
+}
+
+.shelves-stats-chart-title {
+  text-align: center;
+}
+
+@media(min-width: 550px){
+  .shelves-stats-chart {
+    width: 50%;
+  }
+}
+
+

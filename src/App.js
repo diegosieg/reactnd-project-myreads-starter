@@ -97,7 +97,7 @@ class BooksApp extends React.Component {
 
   render() {
     const { books, searchQuery, noResults } = this.state;
-    const { currentlyReading, wantToRead, read } = this.state;
+    const { currentlyReading, wantToRead, read} = this.state;
 
     return (
       <div className="app">
