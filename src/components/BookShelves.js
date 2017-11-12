@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Book from './Book';
-//import { Link } from 'react-router-dom'
 
 function BookShelves(props) {
   const {books, titleCategory, updateShelf} = props;
@@ -18,17 +17,15 @@ function BookShelves(props) {
           </h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
-
-            {books.map((book) => (
-              <li key={book.id}>
-                <Book
-                  book={book}
-                  updateShelf={updateShelf}
-                />
-              </li>
-              )
-            )}
-
+              {books.map((book) => (
+                <li key={book.id}>
+                  <Book
+                    book={book}
+                    updateShelf={updateShelf}
+                  />
+                </li>
+                )
+              )}
             </ol>
           </div>
         </div>

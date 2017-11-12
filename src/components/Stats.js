@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pie, HorizontalBar} from 'react-chartjs-2';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 function Stats(props) {
 
@@ -25,7 +25,11 @@ function Stats(props) {
       'Already read'
     ],
     datasets: [{
-      data: [statsBooks[0].currentlyReading.length, statsBooks[0].wantToRead.length, statsBooks[0].read.length],
+      data: [
+        statsBooks[0].currentlyReading.length,
+        statsBooks[0].wantToRead.length,
+        statsBooks[0].read.length
+      ],
       backgroundColor: [
         '#FF6384',
         '#36A2EB',
@@ -53,7 +57,11 @@ function Stats(props) {
       borderWidth: 1,
       hoverBackgroundColor: '#107CC5',
       hoverBorderColor: 'rgba(255,255,255,1)',
-      data: [pagesBooksCurrently, pagesBooksWanted, pagesBooksRead]
+      data: [
+        pagesBooksCurrently,
+        pagesBooksWanted,
+        pagesBooksRead
+      ]
     }
   ]
   };
@@ -71,8 +79,10 @@ function Stats(props) {
         </div>
       </div>
   );
+}
 
-
+Stats.propTypes = {
+  statsBooks: PropTypes.array.isRequired
 }
 
 export default Stats

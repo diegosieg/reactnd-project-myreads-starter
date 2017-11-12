@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import { Link } from 'react-router-dom'
 
 function Book(props) {
   const {book, updateShelf} = props;
@@ -10,7 +9,12 @@ function Book(props) {
       <div className="book">
         <div className="book-top">
           <div className="book-cover"
-            style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`}}></div>
+            style={{
+              width: 128,
+              height: 193,
+              backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`}
+              }>
+          </div>
           <div className="book-shelf-changer">
             <select
               value={book.shelf !== undefined ? book.shelf : 'none'}
