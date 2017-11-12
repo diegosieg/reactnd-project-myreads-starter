@@ -21,7 +21,7 @@ function SearchBooks(props) {
             </div>
           </div>
           <div className="search-books-results">
-          {noResults ? (<h3 className="bookshelf">Sorry, no results found. Try a new keyword :)</h3>) : (
+          {noResults ? (<h3>Sorry, no results found. Try a new keyword :)</h3>) : (
             <ol className="books-grid">
               {booksFromSearch.map(book => (
                   <li key={book.id}>
