@@ -7,16 +7,19 @@ import SearchBooks from './components/SearchBooks';
 import './App.css';
 
 class BooksApp extends React.Component {
-  state = {
-    // all books
-    books: [],
-    searchQuery: '',
-    noResults: false,
-    // shelves definition
-    booksInMyShelves: [],
-    currentlyReading: [],
-    wantToRead: [],
-    read: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      // all books
+      books: [],
+      searchQuery: '',
+      noResults: false,
+      // shelves definition
+      booksInMyShelves: [],
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    };
   }
 
   syncSearchAndShelvesItems = booksFromSearch => {
